@@ -29,7 +29,8 @@ func main() {
 	}
 	flag.Parse()
 
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
 	if os.Getenv("BIGTABLE_EMULATOR_HOST") == "" && !*gcp {
 		_, _ = fmt.Fprintf(os.Stderr, "bt2disk: BIGTABLE_EMULATOR_HOST must be set OR -gcp=true must be set\n")
